@@ -7,6 +7,9 @@ const config: Config = {
   testMatch: ["**/*.test.ts"],
   moduleFileExtensions: ["ts", "js", "json"],
   collectCoverageFrom: ["src/**/*.ts", "!src/server.ts"],
+  moduleNameMapper: {
+    "^(\\.\\.?/.*)\\.js$": "$1",
+  },
 };
 
 export default config;
