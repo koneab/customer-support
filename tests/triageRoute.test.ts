@@ -49,20 +49,30 @@ describe("POST /triage - validation", () => {
     expect(res.body).toEqual({ error: "message is too long" });
   });
 
-  it("returns 501 for a valid message (not yet implemented)", async () => {
+  it("returns 200 with a TriageResult for a valid message", async () => {
     const res = await request(app)
       .post("/triage")
       .send({ message: "I need help with my account" });
-    expect(res.status).toBe(501);
-    expect(res.body).toEqual({ error: "not implemented" });
+    expect(res.status).toBe(200);
+    expect(res.body).toHaveProperty("intent");
+    expect(res.body).toHaveProperty("priority");
+    expect(res.body).toHaveProperty("needsHuman");
+    expect(res.body).toHaveProperty("confidence");
+    expect(res.body).toHaveProperty("reason");
+    expect(res.body).toHaveProperty("riskFlags");
+    expect(res.body).toHaveProperty("provider");
+    expect(res.body).toHaveProperty("guardrailsApplied");
   });
 
-  it("returns 501 for a message at exactly 5000 characters", async () => {
+  it("returns 200 with a TriageResult for a message at exactly 5000 characters", async () => {
     const res = await request(app)
       .post("/triage")
       .send({ message: "a".repeat(5000) });
-    expect(res.status).toBe(501);
-    expect(res.body).toEqual({ error: "not implemented" });
+    expect(res.status).toBe(200);
+    expect(res.body).toHaveProperty("intent");
+    expect(res.body).toHaveProperty("priority");
+    expect(res.body).toHaveProperty("confidence");
+    expect(res.body).toHaveProperty("provider");
   });
 });
 

@@ -1,6 +1,7 @@
 import { AiProvider } from "./AiProvider";
 
 export class MockAiProvider implements AiProvider {
+  readonly name = "mock";
   private responses: Map<string, unknown>;
 
   constructor(responses?: Map<string, unknown>) {
